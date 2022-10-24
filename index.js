@@ -29,14 +29,12 @@ app.get('/:id', (req, res) => {
     .catch(e => res.sendStatus(500))
 });
 
-// app.get('/news', (req, res) => res.send('this is the news page welcome!'));
-// app.get('/data', (req, res) => res.json({name:"bruno", bio:"i like coding"}));
-
-// app.get('/users/:id', (req, res) => {
-//     console.log(req.params.id); // 1
-//     console.log(req.query); // name
-//     res.send("sorry database is offline, try again later")
-// });
-   
+app.post('/', (req, res) => {
+    const { name } = req.body;
+    pool
+    .query('INSERT INTO users(name) values($1) RETURNING *;', [name])
+    .then(data => res.status(201).json(data))
+    .catch(e => res.sendStatus(500))
+});
 
 app.listen(port, () => console.log(`Server listening at http://localhost:${port}`));
