@@ -9,14 +9,22 @@ const { Pool } = pkg;
 
 const pool = new Pool ({
     user: process.env.USER_DATABASE,
-    host: process.env.USER_DATABASE,
-    database: "esychcgr",
+    host: 'mouse.db.elephantsql.com',
+    database: process.env.USER_DATABASE,
     password: process.env.DB_PASSWORD,
 }) 
 
 app.get('/', (req, res) => {
     pool
     .query('SELECT * FROM users;')
+    .then(data => res.json(data))
+    .catch(e => res.sendStatus(500))
+});
+
+app.get('/:id', (req, res) => {
+    const { id } = req.params;
+    pool
+    .query('SELECT * FROM users WHERE id=$1;', [id])
     .then(data => res.json(data))
     .catch(e => res.sendStatus(500))
 });
