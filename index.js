@@ -15,66 +15,23 @@ const pool = new Pool ({
 }) 
 
 // GET  /  : To get all the users 
-// app.get('/', (req, res) => {
-//     pool
-//     .query('SELECT * FROM users;')
-//     .then(data => res.json(data))
-//     .catch(e => res.sendStatus(500))
-// });
-
-// // GET  /:id :  To get one user (with the id) 
-// app.get('/:id', (req, res) => {
-//     const { id } = req.params;
-//     pool
-//     .query('SELECT * FROM users WHERE id=$1;', [id])
-//     .then(data => res.json(data))
-//     .catch(e => res.sendStatus(500))
-// });
-
-// // POST / -> To create a new user 
-// app.post('/', (req, res) => {
-//     const { name } = req.body;
-//     pool
-//     .query('INSERT INTO users(name) values($1) RETURNING *;', [name])
-//     .then(data => res.status(201).json(data))
-//     .catch(e => res.sendStatus(500))
-// });
-
-// // PUT /:id  :  To edit one user (with the id) 
-// app.put('/:id', (req, res) => {
-//     const { id } = req.params;
-//     const { name } = req.body;
-//     pool
-//     .query('UPDATE users SET name=$1 WHERE id=$2 RETURNING *;', [name, id])
-//     .then(data => res.status(201).json(data))
-//     .catch(e => res.sendStatus(500))
-// });
-
-// // DELETE  /:id : To delete one user (with the id)
-// app.delete('/:id', (req, res) => {
-//     const { id } = req.params;
-//     pool
-//     .query('DELETE users WHERE id=$1;', [id])
-//     .then(data => res.status(201).json(data))
-//     .catch(e => res.sendStatus(500))
-// });
-
-app.get('/orders', (req, res) => {
+app.get('/', (req, res) => {
     pool
-    .query('SELECT * FROM orders;')
+    .query('SELECT * FROM users;')
     .then(data => res.json(data))
     .catch(e => res.sendStatus(500))
 });
 
-app.get('/orders/:id', (req, res) => {
+// GET  /:id :  To get one user (with the id) 
+app.get('/:id', (req, res) => {
     const { id } = req.params;
     pool
-    .query('SELECT * FROM orders WHERE id=$1;', [id])
+    .query('SELECT * FROM users WHERE id=$1;', [id])
     .then(data => res.json(data))
     .catch(e => res.sendStatus(500))
 });
 
-// // POST / -> To create a new user 
+// POST / -> To create a new user 
 app.post('/', (req, res) => {
     const { name } = req.body;
     pool
@@ -83,7 +40,7 @@ app.post('/', (req, res) => {
     .catch(e => res.sendStatus(500))
 });
 
-// // PUT /:id  :  To edit one user (with the id) 
+// PUT /:id  :  To edit one user (with the id) 
 app.put('/:id', (req, res) => {
     const { id } = req.params;
     const { name } = req.body;
@@ -93,11 +50,56 @@ app.put('/:id', (req, res) => {
     .catch(e => res.sendStatus(500))
 });
 
-// // DELETE  /:id : To delete one user (with the id)
+// DELETE  /:id : To delete one user (with the id)
 app.delete('/:id', (req, res) => {
     const { id } = req.params;
     pool
     .query('DELETE users WHERE id=$1;', [id])
+    .then(data => res.status(201).json(data))
+    .catch(e => res.sendStatus(500))
+});
+
+// GET  /  : To get all the order 
+app.get('/orders', (req, res) => {
+    pool
+    .query('SELECT * FROM orders;')
+    .then(data => res.json(data))
+    .catch(e => res.sendStatus(500))
+});
+
+// GET  /:id :  To get one order (with the id) 
+app.get('/orders/:id', (req, res) => {
+    const { id } = req.params;
+    pool
+    .query('SELECT * FROM orders WHERE id=$1;', [id])
+    .then(data => res.json(data))
+    .catch(e => res.sendStatus(500))
+});
+
+// POST / -> To create a new order 
+app.post('/orders', (req, res) => {
+    const { name } = req.body;
+    pool
+    .query('INSERT INTO orders(name) values($1) RETURNING *;', [name])
+    .then(data => res.status(201).json(data))
+    .catch(e => res.sendStatus(500))
+});
+
+// PUT /:id  :  To edit one order (with the id) 
+app.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+    pool
+    .query('UPDATE orders SET name=$1 WHERE id=$2 RETURNING *;', [name, id])
+    .then(data => res.status(201).json(data))
+    .catch(e => res.sendStatus(500))
+});
+
+// DELETE  /:id : To delete one order (with the id)
+app.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    pool
+    .query('DELETE orders WHERE id=$1;', [id])
     .then(data => res.status(201).json(data))
     .catch(e => res.sendStatus(500))
 });
